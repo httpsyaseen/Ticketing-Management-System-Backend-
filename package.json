@@ -1,7 +1,20 @@
 {
+  "name": "ticketing-management-system",
+  "version": "1.0.0",
+  "description": "A ticketing management system for PSBA",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --env-file=config.env index.js"
+  },
+  "author": "httpsyaseen",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
-    "mongoose": "^8.16.4"
-  }
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.4",
+    "morgan": "^1.10.1",
+    "validator": "^13.15.15"
+  },
+  "type": "module"
 }
