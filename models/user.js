@@ -97,7 +97,9 @@ userSchema.methods.isPasswordCorrect = async function (candiatepass, userpass) {
   return await compare(candiatepass, userpass);
 };
 
-userSchema.methods.isPassChanged = function (JWTTimeStamp) {
+userSchema.methods.isPasswordChangedAfterTokenExpires = function (
+  JWTTimeStamp
+) {
   if (this.passwordChangedAt) {
     const passChangedTime = parseInt(
       this.passwordChangedAt.getTime() / 1000,
@@ -108,14 +110,6 @@ userSchema.methods.isPassChanged = function (JWTTimeStamp) {
   return false;
 };
 
-userSchema.methods.generateResetLink = function () {
-  const resetLink = randomBytes(32).toString("hex");
-
-  this.passwordResetLink = createHash("sha256").update(resetLink).digest("hex");
-
-  this.passwordExpiresAt = Date.now() + 10 * 60 * 1000;
-  return resetLink;
-};
 const User = model("User", userSchema);
 
 export default User;

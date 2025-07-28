@@ -11,7 +11,8 @@ const ticketSchema = new mongoose.Schema({
     required: true,
   },
   department: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Department",
     required: true,
   },
   priority: {
@@ -29,16 +30,29 @@ const ticketSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  assignedTo: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
+  // assignedTo: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  // },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  updatedAt: Date,
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+  // comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+  comments: [
+    {
+      comment: String,
+      commentedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    },
+  ],
+  attachments: [{ type: String }],
+  estimatedResolutionTime: {
+    type: Date,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 ticketSchema.pre("save", function (next) {
@@ -46,4 +60,6 @@ ticketSchema.pre("save", function (next) {
   next();
 });
 
-export const Ticket = mongoose.model("Ticket", ticketSchema);
+const Ticket = mongoose.model("Ticket", ticketSchema);
+
+export default Ticket;
