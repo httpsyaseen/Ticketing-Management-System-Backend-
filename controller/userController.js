@@ -7,7 +7,6 @@ const createuser = catchAsync(async (req, res, next) => {
 
   // Check if user already exists
   const existingUser = await User.findOne({ email });
-  console.log(existingUser);
 
   if (existingUser) {
     return next(new AppError("User already exists", 400));
@@ -27,8 +26,14 @@ const createuser = catchAsync(async (req, res, next) => {
     role,
   };
 
-  if (departmentId) userData.departmentId = departmentId;
-  if (marketId) userData.marketId = marketId;
+  if (departmentId) {
+    userData.departmentId = departmentId;
+    userData.marketId = undefined;
+  }
+  if (marketId) {
+    userData.marketId = marketId;
+    userData.departmentId = undefined;
+  }
 
   // Create new user
   const newUser = await User.create(userData);
@@ -53,4 +58,50 @@ const getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createuser, getAllUsers };
+const updateUser = catchAsync(async (req, res, next) => {
+  const { userId } = req.params;
+  const { name, email, role, departmentId, marketId, password } = req.body;
+
+  if ((!departmentId && !marketId) || (departmentId && marketId)) {
+    return res.status(400).json({
+      error: "Provide either departmentId or marketId — not both.",
+    });
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { name, email, role, departmentId, marketId, password },
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedUser) {
+    return next(new AppError("User not found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
+const deleteUser = catchAsync(async (req, res, next) => {
+  const { userId } = req.params;
+
+  const deletedUser = await User.findById(userId);
+
+  if (!deletedUser) {
+    return next(new AppError("User not found", 404));
+  }
+
+  deletedUser.active = false; // Soft delete
+  await deletedUser.save();
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
+export { createuser, getAllUsers, deleteUser, updateUser };

@@ -5,6 +5,9 @@ import UserRouter from "./routes/userRouter.js";
 import marketRouter from "./routes/marketRouter.js";
 import departmentRouter from "./routes/departmentRouter.js";
 import ticketRouter from "./routes/ticketRouter.js";
+import imageRouter from "./routes/imageRouter.js";
+
+import { globalError } from "./controller/errorController.js";
 
 const app = express();
 
@@ -17,6 +20,9 @@ app.use("/api/v1/users", UserRouter);
 app.use("/api/v1/market", marketRouter);
 app.use("/api/v1/department", departmentRouter);
 app.use("/api/v1/ticket", ticketRouter);
+app.use("/tickets-assets", imageRouter);
+
+app.use(globalError);
 
 mongoose
   .connect(process.env.DATABASE)

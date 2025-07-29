@@ -1,8 +1,15 @@
 import express from "express";
 const router = express.Router();
-import { createuser, getAllUsers } from "../controller/userController.js";
+import {
+  createuser,
+  getAllUsers,
+  updateUser,
+  deleteUser,
+} from "../controller/userController.js";
 import { protectedRoute, restrictedTo } from "../middlewares/auth.js";
 import { login } from "../controller/authController.js";
+
+router.post("/login", login);
 
 router.post(
   "/createuser",
@@ -11,12 +18,25 @@ router.post(
   createuser
 );
 
-router.post("/login", login);
 router.get(
   "/getallusers",
   protectedRoute,
   restrictedTo("superadmin"),
   getAllUsers
+);
+
+router.patch(
+  "/updateuser/:id",
+  protectedRoute,
+  restrictedTo("superadmin"),
+  updateUser
+);
+
+router.patch(
+  "/deleteuser/:id",
+  protectedRoute,
+  restrictedTo("superadmin"),
+  deleteUser
 );
 
 export default router;

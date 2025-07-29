@@ -30,25 +30,39 @@ const ticketSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  // assignedTo: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
+
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  // comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+
+  resolvedAt: {
+    type: Date,
+  },
+
+  closedAt: {
+    type: Date,
+  },
+
   comments: [
     {
       comment: String,
       commentedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
   ],
-  attachments: [{ type: String }],
+  images: {
+    type: [String],
+    default: [],
+  },
+
   estimatedResolutionTime: {
     type: Date,
   },
+
   updatedAt: {
     type: Date,
     default: Date.now,
