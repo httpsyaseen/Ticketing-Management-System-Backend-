@@ -6,10 +6,19 @@ import marketRouter from "./routes/marketRouter.js";
 import departmentRouter from "./routes/departmentRouter.js";
 import ticketRouter from "./routes/ticketRouter.js";
 import imageRouter from "./routes/imageRouter.js";
+import cors from "cors";
 
 import { globalError } from "./controller/errorController.js";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
