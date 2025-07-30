@@ -4,7 +4,7 @@ import AppError from "../utils/appError.js";
 import path from "path";
 
 const createTicket = catchAsync(async (req, res, next) => {
-  console.log("In part 2");
+  console.log(req.body, "Request body for creating ticket");
   const { title, description, department, attachments } = req.body;
   const images = req.files; // Multer puts files in req.files for .array()
 
@@ -28,11 +28,6 @@ const createTicket = catchAsync(async (req, res, next) => {
     data: {
       ticket,
     },
-  });
-
-  res.json({
-    images,
-    imagePaths,
   });
 });
 

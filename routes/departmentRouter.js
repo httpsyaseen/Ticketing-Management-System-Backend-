@@ -11,6 +11,10 @@ router
   .post(protectedRoute, restrictedTo("superadmin", "admin"), createDepartment);
 router
   .route("/get-all-departments")
-  .get(protectedRoute, restrictedTo("superadmin", "admin"), getAllDepartments);
+  .get(
+    protectedRoute,
+    restrictedTo("superadmin", "admin", "user"),
+    getAllDepartments
+  );
 
 export default router;

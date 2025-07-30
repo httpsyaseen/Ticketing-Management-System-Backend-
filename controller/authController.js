@@ -28,7 +28,7 @@ const login = catchAsync(async (req, res, next) => {
     username: user.username,
     name: user.name,
     email: user.email,
-    photo: user.photo,
+    departmentId: user.departmentId,
   };
   res.status(200).json({
     status: "success",

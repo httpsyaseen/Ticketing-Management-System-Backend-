@@ -62,26 +62,36 @@ const updateUser = catchAsync(async (req, res, next) => {
   const { userId } = req.params;
   const { name, email, role, departmentId, marketId, password } = req.body;
 
-  if ((!departmentId && !marketId) || (departmentId && marketId)) {
+  const user = await User.findById(userId);
+  if (!user) return next(new AppError("User not found", 404));
+
+  // Apply updates manually
+  if (name !== undefined) user.name = name;
+  if (email !== undefined) user.email = email;
+  if (role !== undefined) user.role = role;
+  if (password !== undefined) user.password = password;
+
+  if (departmentId && marketId) {
     return res.status(400).json({
       error: "Provide either departmentId or marketId — not both.",
     });
   }
 
-  const updatedUser = await User.findByIdAndUpdate(
-    userId,
-    { name, email, role, departmentId, marketId, password },
-    { new: true, runValidators: true }
-  );
-
-  if (!updatedUser) {
-    return next(new AppError("User not found", 404));
+  if (departmentId !== undefined) {
+    user.departmentId = departmentId;
+    user.marketId = undefined;
   }
+  if (marketId !== undefined) {
+    user.marketId = marketId;
+    user.departmentId = undefined;
+  }
+
+  await user.save(); // <-- pre-save hooks now run
 
   res.status(200).json({
     status: "success",
     data: {
-      user: updatedUser,
+      user,
     },
   });
 });

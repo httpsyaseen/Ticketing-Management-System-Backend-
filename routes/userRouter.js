@@ -26,7 +26,7 @@ router.get(
 );
 
 router.patch(
-  "/updateuser/:id",
+  "/updateuser/:userId",
   protectedRoute,
   restrictedTo("superadmin"),
   updateUser
