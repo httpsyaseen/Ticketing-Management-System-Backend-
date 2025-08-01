@@ -11,9 +11,15 @@ const createTicket = catchAsync(async (req, res, next) => {
   // Map image paths if images exist, else empty array
   const imagePaths =
     images && images.length > 0
-      ? images.map((img) => `/tickets-assets/${img.filename}`)
+      ? images.map(
+          (img) =>
+            `${req.protocol}://${req.get("host")}/tickets-assets/${
+              img.filename
+            }`
+        )
       : [];
 
+  console.log(imagePaths, "Image paths for ticket");
   const ticket = await Ticket.create({
     title,
     description,
