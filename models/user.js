@@ -23,42 +23,33 @@ const userSchema = new Schema({
     required: [true, "Please provide a password"],
     select: false,
   },
+
   role: {
     type: String,
     default: "user",
     enum: ["user", "admin", "superadmin"],
     required: [true, "Please provide a role"],
   },
-  photo: String,
-  // passwordConfirm: {
-  //   type: String,
-  //   min: [8, "Password must be more than or equal to 8 characters"],
-  //   required: [true, "Please Confirm your password"],
-  //   validate: {
-  //     validator: function (el) {
-  //       return el === this.password;
-  //     },
-  //     message: "Password Doesnot Match",
-  //   },
-  // },
+
   active: {
     type: Boolean,
     default: true,
     select: false,
   },
-  departmentId: {
+
+  assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Department",
-    default: null,
+    refPath: "assignedToType",
+    required: true,
   },
-  marketId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Market",
-    default: null,
+
+  assignedToType: {
+    type: String,
+    enum: ["Department", "Market"],
+    required: true,
   },
+
   passwordChangedAt: Date,
-  passwordExpiresAt: Date,
-  passwordResetLink: String,
 });
 
 // userSchema.index({ departmentId: 1, marketId: 1 });
@@ -68,16 +59,16 @@ userSchema.pre(/^find/, function (next) {
   next();
 });
 
-userSchema.pre("save", function (next) {
-  if (this.departmentId && this.marketId) {
-    return next(
-      new Error(
-        "A user can be assigned to either a department or a market, not both."
-      )
-    );
-  }
-  next();
-});
+// userSchema.pre("save", function (next) {
+//   if (this.departmentId && this.marketId) {
+//     return next(
+//       new Error(
+//         "A user can be assigned to either a department or a market, not both."
+//       )
+//     );
+//   }
+//   next();
+// });
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

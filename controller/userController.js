@@ -3,7 +3,7 @@ import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 
 const createuser = catchAsync(async (req, res, next) => {
-  const { name, email, password, role, departmentId, marketId } = req.body;
+  const { name, email, password, role, assignedTo, assignedToType } = req.body;
 
   // Check if user already exists
   const existingUser = await User.findOne({ email });
@@ -12,28 +12,15 @@ const createuser = catchAsync(async (req, res, next) => {
     return next(new AppError("User already exists", 400));
   }
 
-  if ((!departmentId && !marketId) || (departmentId && marketId)) {
-    return res.status(400).json({
-      error: "Provide either departmentId or marketId — not both.",
-    });
-  }
-
   // Prepare user data with optional departmentId or marketId
   const userData = {
     name,
     email,
     password,
     role,
+    assignedTo,
+    assignedToType,
   };
-
-  if (departmentId) {
-    userData.departmentId = departmentId;
-    userData.marketId = undefined;
-  }
-  if (marketId) {
-    userData.marketId = marketId;
-    userData.departmentId = undefined;
-  }
 
   // Create new user
   const newUser = await User.create(userData);

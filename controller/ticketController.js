@@ -4,11 +4,11 @@ import AppError from "../utils/appError.js";
 import path from "path";
 
 const createTicket = catchAsync(async (req, res, next) => {
-  console.log(req.body, "Request body for creating ticket");
-  const { title, description, department, attachments } = req.body;
+  const { title, description, department } = req.body;
   const images = req.files; // Multer puts files in req.files for .array()
 
   // Map image paths if images exist, else empty array
+
   const imagePaths =
     images && images.length > 0
       ? images.map(
@@ -19,12 +19,10 @@ const createTicket = catchAsync(async (req, res, next) => {
         )
       : [];
 
-  console.log(imagePaths, "Image paths for ticket");
   const ticket = await Ticket.create({
     title,
     description,
     department,
-    attachments,
     createdBy: req.user._id,
     images: imagePaths,
   });
@@ -44,17 +42,44 @@ const getTicketByDepartment = catchAsync(async (req, res, next) => {
     return next(new AppError("Department ID is required", 400));
   }
 
-  const tickets = await Ticket.find({ department: departmentId })
+  const tickets = await Ticket.find({
+    department: departmentId,
+    status: { $ne: "closed" },
+  })
     .populate({
       path: "createdBy",
-      select: "name marketId",
+      select: "name assignedTo",
       populate: {
-        path: "marketId",
-        select: "name",
+        path: "assignedTo",
+        model: ["Department", "Market"],
       },
     })
-    .populate("department", "name")
     .populate("comments.commentedBy", "name");
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      tickets,
+    },
+  });
+});
+
+const getUsertickets = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const tickets = await Ticket.find({
+    createdBy: userId,
+    status: { $ne: "Closed" },
+  })
+    .populate({
+      path: "createdBy",
+      select: "name assignedTo",
+      populate: {
+        path: "assignedTo",
+        model: ["Department", "Market"],
+      },
+    })
+    .populate("comments.commentedBy", "name")
+    .populate("department", "name");
 
   res.status(200).json({
     status: "success",
@@ -78,23 +103,16 @@ const setResolutionTime = catchAsync(async (req, res, next) => {
     return next(new AppError("Ticket not found", 404));
   }
 
-  if (ticket.status === "Resolved" || ticket.status === "Closed") {
+  if (ticket.status !== "Open") {
     return next(
-      new AppError(
-        "Cannot set resolution time for resolved or closed tickets",
-        400
-      )
+      new AppError("Resolution time can only be set for open tickets", 400)
     );
   }
   ticket.estimatedResolutionTime = estimatedResolutionTime;
-  if (comment) {
-    ticket.comments.push({
-      comment,
-      commentedBy: req.user._id,
-    });
-  }
+  ticket.status = "In Progress";
 
   await ticket.save();
+  await ticket.populate("comments.commentedBy", "name");
   res.status(200).json({
     status: "success",
     data: {
@@ -112,6 +130,13 @@ const addComment = catchAsync(async (req, res, next) => {
   }
 
   const ticket = await Ticket.findById(ticketId);
+
+  if (ticket.status !== "In Progress") {
+    return next(
+      new AppError("Ticket is still open or Resolved, cannot add comment", 400)
+    );
+  }
+
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
   }
@@ -121,6 +146,7 @@ const addComment = catchAsync(async (req, res, next) => {
   });
 
   await ticket.save();
+  await ticket.populate("comments.commentedBy", "name");
 
   res.status(200).json({
     status: "success",
@@ -150,12 +176,14 @@ const setResolvedStatus = catchAsync(async (req, res, next) => {
 
   ticket.status = "Resolved";
   ticket.resolvedAt = Date.now();
+  ticket.estimatedResolutionTime = undefined;
   ticket.comments.push({
     comment,
     commentedBy: req.user._id,
   });
 
   await ticket.save();
+  await ticket.populate("comments.commentedBy", "name");
 
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
@@ -215,6 +243,7 @@ const referDepartment = catchAsync(async (req, res, next) => {
   });
   ticket.status = "Open";
   await ticket.save();
+  await ticket.populate("comments.commentedBy", "name");
   res.status(200).json({
     status: "success",
     data: {
@@ -242,4 +271,5 @@ export {
   setClosedStatus,
   referDepartment,
   getTicketImage,
+  getUsertickets,
 };

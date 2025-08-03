@@ -7,7 +7,7 @@ import {
   deleteUser,
 } from "../controller/userController.js";
 import { protectedRoute, restrictedTo } from "../middlewares/auth.js";
-import { login } from "../controller/authController.js";
+import { login, verifyUser } from "../controller/authController.js";
 
 router.post("/login", login);
 
@@ -17,6 +17,8 @@ router.post(
   restrictedTo("superadmin"),
   createuser
 );
+
+router.get("/verify", verifyUser);
 
 router.get(
   "/getallusers",
