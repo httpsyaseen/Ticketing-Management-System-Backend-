@@ -13,8 +13,8 @@ router.post("/login", login);
 
 router.post(
   "/createuser",
-  protectedRoute,
-  restrictedTo("superadmin"),
+  // protectedRoute,
+  // restrictedTo("superadmin"),
   createuser
 );
 

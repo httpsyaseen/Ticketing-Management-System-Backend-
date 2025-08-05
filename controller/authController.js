@@ -53,7 +53,7 @@ const verifyUser = catchAsync(async (req, res, next) => {
   }
 
   if (!token) {
-    next(new AppError("Authorized Users Only", 401));
+    return next(new AppError("Authorized Users Only", 401));
   }
 
   //2.Verify token and handle 2 Errors

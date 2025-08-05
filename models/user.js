@@ -59,17 +59,6 @@ userSchema.pre(/^find/, function (next) {
   next();
 });
 
-// userSchema.pre("save", function (next) {
-//   if (this.departmentId && this.marketId) {
-//     return next(
-//       new Error(
-//         "A user can be assigned to either a department or a market, not both."
-//       )
-//     );
-//   }
-//   next();
-// });
-
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await hash(this.password, 12);

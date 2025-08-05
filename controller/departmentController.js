@@ -21,7 +21,9 @@ const createDepartment = catchAsync(async (req, res, next) => {
 });
 
 const getAllDepartments = catchAsync(async (req, res, next) => {
-  const departments = await Department.find();
+  const departments = await Department.find({
+    name: { $ne: "Head Office Administration" },
+  });
 
   res.status(200).json({
     status: "success",

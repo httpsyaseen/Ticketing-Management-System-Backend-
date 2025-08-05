@@ -262,6 +262,59 @@ const getTicketImage = catchAsync(async (req, res) => {
   res.sendFile(filePath);
 });
 
+const getClosedTicketsByDepartment = catchAsync(async (req, res, next) => {
+  const { departmentId } = req.params;
+  if (!departmentId) {
+    return next(new AppError("Department ID is required", 400));
+  }
+  const tickets = await Ticket.find({
+    department: departmentId,
+    status: "Closed",
+  })
+
+    .populate({
+      path: "createdBy",
+      select: "name assignedTo",
+      populate: {
+        path: "assignedTo",
+        model: ["Department", "Market"],
+      },
+    })
+    .populate("comments.commentedBy", "name");
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      tickets,
+    },
+  });
+});
+
+const getUserClosedTickets = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  const tickets = await Ticket.find({
+    createdBy: userId,
+    status: "Closed",
+  })
+    .populate({
+      path: "createdBy",
+      select: "name assignedTo",
+      populate: {
+        path: "assignedTo",
+        model: ["Department", "Market"],
+      },
+    })
+    .populate("comments.commentedBy", "name")
+    .populate("department", "name");
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      tickets,
+    },
+  });
+});
+
 export {
   createTicket,
   getTicketByDepartment,
@@ -272,4 +325,6 @@ export {
   referDepartment,
   getTicketImage,
   getUsertickets,
+  getUserClosedTickets,
+  getClosedTicketsByDepartment,
 };

@@ -8,6 +8,7 @@ import {
 
 router
   .route("/create-department")
+  // .post(createDepartment);
   .post(protectedRoute, restrictedTo("superadmin", "admin"), createDepartment);
 router
   .route("/get-all-departments")
