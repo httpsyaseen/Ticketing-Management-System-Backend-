@@ -10,11 +10,18 @@ const ticketSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  department: {
+  assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Department",
+    ref: "assignedToType",
     required: true,
   },
+
+  assignedToType: {
+    type: String,
+    enum: ["Department", "Market"],
+    required: true,
+  },
+
   priority: {
     type: String,
     enum: ["Low", "Medium", "High", "Critical"],
@@ -22,8 +29,8 @@ const ticketSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Open", "In Progress", "Resolved", "Closed"],
-    default: "Open",
+    enum: ["open", "in-progress", "resolved", "closed"],
+    default: "open",
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,

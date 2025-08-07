@@ -4,7 +4,7 @@ import AppError from "../utils/appError.js";
 import path from "path";
 
 const createTicket = catchAsync(async (req, res, next) => {
-  const { title, description, department } = req.body;
+  const { title, description, assignedTo, assignedToType } = req.body;
   const images = req.files; // Multer puts files in req.files for .array()
 
   // Map image paths if images exist, else empty array
@@ -22,7 +22,8 @@ const createTicket = catchAsync(async (req, res, next) => {
   const ticket = await Ticket.create({
     title,
     description,
-    department,
+    assignedTo,
+    assignedToType,
     createdBy: req.user._id,
     images: imagePaths,
   });
@@ -43,7 +44,7 @@ const getTicketByDepartment = catchAsync(async (req, res, next) => {
   }
 
   const tickets = await Ticket.find({
-    department: departmentId,
+    assignedTo: departmentId,
     status: { $ne: "closed" },
   })
     .populate({
@@ -54,7 +55,11 @@ const getTicketByDepartment = catchAsync(async (req, res, next) => {
         model: ["Department", "Market"],
       },
     })
-    .populate("comments.commentedBy", "name");
+    .populate("comments.commentedBy", "name")
+    .populate({
+      path: "assignedTo",
+      model: ["Department", "Market"],
+    });
 
   res.status(200).json({
     status: "success",
@@ -79,7 +84,10 @@ const getUsertickets = catchAsync(async (req, res, next) => {
       },
     })
     .populate("comments.commentedBy", "name")
-    .populate("department", "name");
+    .populate({
+      path: "assignedTo",
+      model: ["Department", "Market"],
+    });
 
   res.status(200).json({
     status: "success",
@@ -91,7 +99,7 @@ const getUsertickets = catchAsync(async (req, res, next) => {
 
 const setResolutionTime = catchAsync(async (req, res, next) => {
   const { ticketId } = req.params;
-  const { estimatedResolutionTime, comment } = req.body;
+  const { estimatedResolutionTime } = req.body;
 
   if (!ticketId || !estimatedResolutionTime) {
     return next(
@@ -131,7 +139,7 @@ const addComment = catchAsync(async (req, res, next) => {
 
   const ticket = await Ticket.findById(ticketId);
 
-  if (ticket.status !== "In Progress") {
+  if (ticket.status !== "in-progress") {
     return next(
       new AppError("Ticket is still open or Resolved, cannot add comment", 400)
     );
@@ -170,11 +178,11 @@ const setResolvedStatus = catchAsync(async (req, res, next) => {
     return next(new AppError("Ticket not found", 404));
   }
 
-  if (ticket.status === "Resolved") {
+  if (ticket.status === "resolved") {
     return next(new AppError("Ticket is already resolved", 400));
   }
 
-  ticket.status = "Resolved";
+  ticket.status = "resolved";
   ticket.resolvedAt = Date.now();
   ticket.estimatedResolutionTime = undefined;
   ticket.comments.push({
@@ -208,10 +216,10 @@ const setClosedStatus = catchAsync(async (req, res, next) => {
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
   }
-  if (ticket.status === "Closed") {
+  if (ticket.status === "closed") {
     return next(new AppError("Ticket is already closed", 400));
   }
-  ticket.status = "Closed";
+  ticket.status = "closed";
   ticket.closedAt = Date.now();
 
   await ticket.save();
@@ -269,7 +277,7 @@ const getClosedTicketsByDepartment = catchAsync(async (req, res, next) => {
   }
   const tickets = await Ticket.find({
     department: departmentId,
-    status: "Closed",
+    status: "closed",
   })
 
     .populate({
@@ -294,7 +302,7 @@ const getUserClosedTickets = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const tickets = await Ticket.find({
     createdBy: userId,
-    status: "Closed",
+    status: "closed",
   })
     .populate({
       path: "createdBy",
