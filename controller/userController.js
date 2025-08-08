@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
+import Department from "../models/department.js";
 
 const createuser = catchAsync(async (req, res, next) => {
   const { name, email, password, role, assignedTo, assignedToType } = req.body;
@@ -103,12 +104,23 @@ const deleteUser = catchAsync(async (req, res, next) => {
 
 const starter = catchAsync(async () => {
   const user = await User.findOne({ email: "superadmin@gmail.com" });
+  let department = await Department.findOne({
+    name: "Head Office Administration",
+  });
+
+  if (!department) {
+    department = await Department.create({
+      name: "Head Office Administration",
+    });
+  }
   if (!user) {
     const newUser = await User.create({
       name: "Super Admin",
       email: "superadmin@gmail.com",
       password: "superadmin123",
       role: "superadmin",
+      assignedTo: department._id,
+      assignedToType: "Department",
     });
   }
   return;
