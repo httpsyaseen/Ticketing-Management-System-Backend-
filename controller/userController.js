@@ -101,4 +101,17 @@ const deleteUser = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createuser, getAllUsers, deleteUser, updateUser };
+const starter = catchAsync(async () => {
+  const user = await User.findOne({ email: "superadmin@gmail.com" });
+  if (!user) {
+    const newUser = await User.create({
+      name: "Super Admin",
+      email: "superadmin@gmail.com",
+      password: "superadmin123",
+      role: "superadmin",
+    });
+  }
+  return;
+});
+
+export { createuser, getAllUsers, deleteUser, updateUser, starter };

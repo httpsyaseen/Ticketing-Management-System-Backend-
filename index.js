@@ -9,6 +9,7 @@ import imageRouter from "./routes/imageRouter.js";
 import cors from "cors";
 
 import { globalError } from "./controller/errorController.js";
+import { starter } from "./controller/userController.js";
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+starter();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

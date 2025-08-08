@@ -118,6 +118,7 @@ const setResolutionTime = catchAsync(async (req, res, next) => {
   }
   ticket.estimatedResolutionTime = estimatedResolutionTime;
   ticket.status = "In Progress";
+  ticket.inProgressAt = Date.now();
 
   await ticket.save();
   await ticket.populate("comments.commentedBy", "name");

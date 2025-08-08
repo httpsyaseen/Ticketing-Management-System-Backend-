@@ -51,6 +51,10 @@ const ticketSchema = new mongoose.Schema({
     type: Date,
   },
 
+  inProgressAt: {
+    type: Date,
+  },
+
   comments: [
     {
       comment: String,
