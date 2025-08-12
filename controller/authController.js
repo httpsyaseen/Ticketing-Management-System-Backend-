@@ -36,6 +36,7 @@ const login = catchAsync(async (req, res, next) => {
     email: user.email,
     assignedTo: user.assignedTo,
     assignedToType: user.assignedToType,
+    role: user.role,
   };
   res.status(200).json({
     status: "success",

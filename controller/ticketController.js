@@ -99,26 +99,36 @@ const getUsertickets = catchAsync(async (req, res, next) => {
 
 const setResolutionTime = catchAsync(async (req, res, next) => {
   const { ticketId } = req.params;
-  const { estimatedResolutionTime } = req.body;
+  const { estimatedResolutionTime, priority } = req.body;
 
   if (!ticketId || !estimatedResolutionTime) {
     return next(
       new AppError("Ticket ID and estimated resolution time are required", 400)
     );
   }
+
   const ticket = await Ticket.findById(ticketId);
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
   }
 
-  if (ticket.status !== "Open") {
+  console.log(ticket.assignedTo, req.user.assignedTo._id);
+
+  if (!ticket.assignedTo.equals(req.user.assignedTo._id)) {
+    return next(
+      new AppError("You are not authorized to entertain this ticket", 403)
+    );
+  }
+
+  if (ticket.status !== "open") {
     return next(
       new AppError("Resolution time can only be set for open tickets", 400)
     );
   }
   ticket.estimatedResolutionTime = estimatedResolutionTime;
-  ticket.status = "In Progress";
+  ticket.status = "in-progress";
   ticket.inProgressAt = Date.now();
+  ticket.priority = priority || "low"; // Default to low if not provided
 
   await ticket.save();
   await ticket.populate("comments.commentedBy", "name");
@@ -185,7 +195,6 @@ const setResolvedStatus = catchAsync(async (req, res, next) => {
 
   ticket.status = "resolved";
   ticket.resolvedAt = Date.now();
-  ticket.estimatedResolutionTime = undefined;
   ticket.comments.push({
     comment,
     commentedBy: req.user._id,

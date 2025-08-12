@@ -32,9 +32,7 @@ router
 router
   .route("/set-resolved/:ticketId")
   .patch(protectedRoute, restrictedTo("admin"), setResolvedStatus);
-router
-  .route("/set-closed/:ticketId")
-  .patch(protectedRoute, restrictedTo("user"), setClosedStatus);
+router.route("/set-closed/:ticketId").patch(protectedRoute, setClosedStatus);
 
 router
   .route("/refer-department/:ticketId")
