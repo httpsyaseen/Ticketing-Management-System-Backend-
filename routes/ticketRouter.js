@@ -9,6 +9,7 @@ import {
   referDepartment,
   getUsertickets,
   getTicketById,
+  getTicketsByDateAndType,
 } from "../controller/ticketController.js";
 import { protectedRoute, restrictedTo } from "../middlewares/auth.js";
 import upload from "../config/multerConfig.js";
@@ -40,5 +41,7 @@ router.route("/close-ticket/:ticketId").patch(protectedRoute, setClosedStatus);
 router
   .route("/refer-department/:ticketId")
   .patch(protectedRoute, restrictedTo("admin"), referDepartment);
+
+router.route("/get-tickets").post(protectedRoute, getTicketsByDateAndType);
 
 export default router;

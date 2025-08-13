@@ -342,6 +342,65 @@ const getTicketById = catchAsync(async (req, res, next) => {
   });
 });
 
+const getTicketsByDateAndType = catchAsync(async (req, res, next) => {
+  const { startDate, endDate, ticketType } = req.body; // or req.body if using POST
+
+  // Validate required parameters
+  if (!startDate || !endDate || !ticketType) {
+    return next(
+      new AppError("Start date, end date, and ticket type are required", 400)
+    );
+  }
+
+  // Validate ticketType
+  if (!["created", "assigned"].includes(ticketType)) {
+    return next(
+      new AppError("Ticket type must be either 'created' or 'assigned'", 400)
+    );
+  }
+
+  // Validate dates
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+    return next(new AppError("Invalid date format", 400));
+  }
+
+  if (start > end) {
+    return next(new AppError("Start date cannot be after end date", 400));
+  }
+
+  // Set end date to end of day
+  end.setHours(23, 59, 59, 999);
+
+  // Build query based on ticket type
+  let query = {
+    createdAt: {
+      $gte: start,
+      $lte: end,
+    },
+    status: "closed",
+  };
+
+  if (ticketType === "created") {
+    query.createdBy = req.user._id;
+  } else if (ticketType === "assigned") {
+    query.assignedTo = req.user.assignedTo._id;
+  }
+
+  // Execute query
+  const tickets = await Ticket.find(query);
+
+  res.status(200).json({
+    status: "success",
+    results: tickets.length,
+    data: {
+      tickets,
+    },
+  });
+});
+
 export {
   createTicket,
   getTicketByDepartment,
@@ -355,4 +414,5 @@ export {
   getUserClosedTickets,
   getClosedTicketsByDepartment,
   getTicketById,
+  getTicketsByDateAndType,
 };

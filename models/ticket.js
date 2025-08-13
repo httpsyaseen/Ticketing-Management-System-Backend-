@@ -98,7 +98,8 @@ ticketSchema.pre(/^find/, function (next) {
     .populate({
       path: "assignedTo",
       model: ["Department", "Market"],
-    });
+    })
+    .sort({ createdAt: -1 });
 
   next();
 });
