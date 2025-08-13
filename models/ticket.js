@@ -85,6 +85,24 @@ ticketSchema.pre("save", function (next) {
   next();
 });
 
+ticketSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "createdBy",
+    select: "name assignedTo",
+    populate: {
+      path: "assignedTo",
+      model: ["Department", "Market"],
+    },
+  })
+    .populate("comments.commentedBy", "name")
+    .populate({
+      path: "assignedTo",
+      model: ["Department", "Market"],
+    });
+
+  next();
+});
+
 const Ticket = mongoose.model("Ticket", ticketSchema);
 
 export default Ticket;

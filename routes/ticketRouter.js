@@ -8,6 +8,7 @@ import {
   setResolvedStatus,
   referDepartment,
   getUsertickets,
+  getTicketById,
 } from "../controller/ticketController.js";
 import { protectedRoute, restrictedTo } from "../middlewares/auth.js";
 import upload from "../config/multerConfig.js";
@@ -19,6 +20,8 @@ router
   .post(protectedRoute, upload.array("images", 2), createTicket);
 
 router.route("/getusertickets").get(protectedRoute, getUsertickets);
+
+router.route("/get-ticket/:ticketId").get(protectedRoute, getTicketById);
 
 router.route("/:departmentId").get(protectedRoute, getTicketByDepartment);
 router
@@ -32,7 +35,7 @@ router
 router
   .route("/set-resolved/:ticketId")
   .patch(protectedRoute, restrictedTo("admin"), setResolvedStatus);
-router.route("/set-closed/:ticketId").patch(protectedRoute, setClosedStatus);
+router.route("/close-ticket/:ticketId").patch(protectedRoute, setClosedStatus);
 
 router
   .route("/refer-department/:ticketId")

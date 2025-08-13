@@ -32,6 +32,7 @@ const login = catchAsync(async (req, res, next) => {
   //3) if everything ok, send token to client
   const token = signToken(user._id);
   const responseUser = {
+    _id: user._id,
     name: user.name,
     email: user.email,
     assignedTo: user.assignedTo,

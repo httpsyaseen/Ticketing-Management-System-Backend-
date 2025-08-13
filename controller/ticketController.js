@@ -46,21 +46,7 @@ const getTicketByDepartment = catchAsync(async (req, res, next) => {
   const tickets = await Ticket.find({
     assignedTo: departmentId,
     status: { $ne: "closed" },
-  })
-    .populate({
-      path: "createdBy",
-      select: "name assignedTo",
-      populate: {
-        path: "assignedTo",
-        model: ["Department", "Market"],
-      },
-    })
-    .populate("comments.commentedBy", "name")
-    .populate({
-      path: "assignedTo",
-      model: ["Department", "Market"],
-    });
-
+  });
   res.status(200).json({
     status: "success",
     data: {
@@ -73,21 +59,8 @@ const getUsertickets = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const tickets = await Ticket.find({
     createdBy: userId,
-    status: { $ne: "Closed" },
-  })
-    .populate({
-      path: "createdBy",
-      select: "name assignedTo",
-      populate: {
-        path: "assignedTo",
-        model: ["Department", "Market"],
-      },
-    })
-    .populate("comments.commentedBy", "name")
-    .populate({
-      path: "assignedTo",
-      model: ["Department", "Market"],
-    });
+    status: { $ne: "closed" },
+  });
 
   res.status(200).json({
     status: "success",
@@ -111,8 +84,6 @@ const setResolutionTime = catchAsync(async (req, res, next) => {
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
   }
-
-  console.log(ticket.assignedTo, req.user.assignedTo._id);
 
   if (!ticket.assignedTo.equals(req.user.assignedTo._id)) {
     return next(
@@ -217,20 +188,46 @@ const setResolvedStatus = catchAsync(async (req, res, next) => {
 
 const setClosedStatus = catchAsync(async (req, res, next) => {
   const { ticketId } = req.params;
+  const { feedback } = req.body;
 
-  if (!ticketId) {
-    return next(new AppError("Ticket ID and comment are required", 400));
+  if (!ticketId || !feedback) {
+    return next(new AppError("Ticket ID and feedback are required", 400));
   }
 
-  const ticket = await Ticket.findById(ticketId);
+  const ticket = await Ticket.findById(ticketId)
+    .populate({
+      path: "createdBy",
+      select: "name assignedTo",
+      populate: {
+        path: "assignedTo",
+        model: ["Department", "Market"],
+      },
+    })
+    .populate("comments.commentedBy", "name")
+    .populate({
+      path: "assignedTo",
+      model: ["Department", "Market"],
+    });
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
   }
+
+  if (!ticket.createdBy.equals(req.user._id)) {
+    return next(
+      new AppError("You are not authorized to close this ticket", 403)
+    );
+  }
+
   if (ticket.status === "closed") {
     return next(new AppError("Ticket is already closed", 400));
   }
+
   ticket.status = "closed";
   ticket.closedAt = Date.now();
+  ticket.comments.push({
+    comment: feedback,
+    commentedBy: req.user._id,
+  });
 
   await ticket.save();
 
@@ -246,6 +243,8 @@ const referDepartment = catchAsync(async (req, res, next) => {
   const { ticketId } = req.params;
   const { departmentId, comment } = req.body;
 
+  console.log(departmentId, comment);
+
   if (!ticketId || !departmentId) {
     return next(new AppError("Ticket ID and department ID are required", 400));
   }
@@ -254,12 +253,12 @@ const referDepartment = catchAsync(async (req, res, next) => {
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
   }
-  ticket.department = departmentId;
+  ticket.assignedTo = departmentId;
   ticket.comments.push({
     comment,
     commentedBy: req.user._id,
   });
-  ticket.status = "Open";
+  ticket.status = "open";
   await ticket.save();
   await ticket.populate("comments.commentedBy", "name");
   res.status(200).json({
@@ -288,17 +287,7 @@ const getClosedTicketsByDepartment = catchAsync(async (req, res, next) => {
   const tickets = await Ticket.find({
     department: departmentId,
     status: "closed",
-  })
-
-    .populate({
-      path: "createdBy",
-      select: "name assignedTo",
-      populate: {
-        path: "assignedTo",
-        model: ["Department", "Market"],
-      },
-    })
-    .populate("comments.commentedBy", "name");
+  });
 
   res.status(200).json({
     status: "success",
@@ -313,22 +302,42 @@ const getUserClosedTickets = catchAsync(async (req, res, next) => {
   const tickets = await Ticket.find({
     createdBy: userId,
     status: "closed",
-  })
-    .populate({
-      path: "createdBy",
-      select: "name assignedTo",
-      populate: {
-        path: "assignedTo",
-        model: ["Department", "Market"],
-      },
-    })
-    .populate("comments.commentedBy", "name")
-    .populate("department", "name");
+  });
 
   res.status(200).json({
     status: "success",
     data: {
       tickets,
+    },
+  });
+});
+
+const getTicketById = catchAsync(async (req, res, next) => {
+  const { ticketId } = req.params;
+
+  if (!ticketId) {
+    return next(new AppError("Ticket ID is required", 400));
+  }
+
+  const ticket = await Ticket.findById(ticketId);
+
+  if (!ticket) {
+    return next(new AppError("Ticket not found", 404));
+  }
+
+  if (
+    !ticket.createdBy.equals(req.user._id) &&
+    !ticket.assignedTo.equals(req.user.assignedTo)
+  ) {
+    return next(
+      new AppError("You are not authorized to view this ticket", 403)
+    );
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      ticket,
     },
   });
 });
@@ -345,4 +354,5 @@ export {
   getUsertickets,
   getUserClosedTickets,
   getClosedTicketsByDepartment,
+  getTicketById,
 };
