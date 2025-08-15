@@ -6,10 +6,12 @@ import marketRouter from "./routes/marketRouter.js";
 import departmentRouter from "./routes/departmentRouter.js";
 import ticketRouter from "./routes/ticketRouter.js";
 import imageRouter from "./routes/imageRouter.js";
+import reportRouter from "./routes/reportRouter.js";
 import cors from "cors";
 
 import { globalError } from "./controller/errorController.js";
 import { starter } from "./controller/userController.js";
+import { createWeeklyReport } from "./controller/reportController.js";
 
 const app = express();
 
@@ -22,6 +24,7 @@ app.use(
 );
 
 // starter();
+// createWeeklyReport();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,6 +35,7 @@ app.use("/api/v1/users", UserRouter);
 app.use("/api/v1/market", marketRouter);
 app.use("/api/v1/department", departmentRouter);
 app.use("/api/v1/ticket", ticketRouter);
+app.use("/api/v1/report", reportRouter);
 app.use("/tickets-assets", imageRouter);
 
 app.use(globalError);
