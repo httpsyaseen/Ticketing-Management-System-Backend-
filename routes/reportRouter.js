@@ -25,4 +25,8 @@ router
   .route("/clear-by-operations/:reportId")
   .patch(protectedRoute, setClearByOperations);
 
+router
+  .route("/get-report-by-date")
+  .get(protectedRoute, restrictedTo("superadmin", "admin"), getReportByDate);
+
 export default router;
