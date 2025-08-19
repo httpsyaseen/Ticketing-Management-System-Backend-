@@ -12,6 +12,26 @@ const weeklyReportSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  clearedByItAt: {
+    type: Date,
+    default: null,
+  },
+  clearedByMonitoring: {
+    type: Boolean,
+    default: false,
+  },
+  clearedByMonitoringAt: {
+    type: Date,
+    default: null,
+  },
+  clearedByOperations: {
+    type: Boolean,
+    default: false,
+  },
+  clearedByOperationsAt: {
+    type: Date,
+    default: null,
+  },
 });
 
 weeklyReportSchema.pre(/^find/, function (next) {

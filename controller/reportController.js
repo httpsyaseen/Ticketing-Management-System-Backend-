@@ -139,9 +139,102 @@ const getWeeklyReport = catchAsync(async (req, res, next) => {
   });
 });
 
+const setClearByIt = catchAsync(async (req, res, next) => {
+  const { reportId } = req.params;
+
+  // if (user.role !== "IT") {
+  //   return next(
+  //     new AppError("You are not authorized to clear this report", 403)
+  //   );
+  // }
+
+  const report = await WeeklyReport.findById(reportId);
+  if (!report) {
+    return next(new AppError("No report found with that ID", 404));
+  }
+
+  report.clearedByIt = true;
+  report.clearedByItAt = Date.now();
+  await report.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      report,
+    },
+  });
+});
+
+const setClearByMonitoring = catchAsync(async (req, res, next) => {
+  const { reportId } = req.params;
+
+  // if (user.role !== "Monitoring") {
+  //   return next(
+  //     new AppError("You are not authorized to clear this report", 403)
+  //   );
+  // }
+
+  const report = await WeeklyReport.findById(reportId);
+  if (!report) {
+    return next(new AppError("No report found with that ID", 404));
+  }
+
+  report.clearedByMonitoring = true;
+  report.clearedByMonitoringAt = Date.now();
+  await report.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      report,
+    },
+  });
+});
+
+const setClearByOperations = catchAsync(async (req, res, next) => {
+  const { reportId } = req.params;
+  const report = await WeeklyReport.findById(reportId);
+  if (!report) {
+    return next(new AppError("No report found with that ID", 404));
+  }
+
+  report.clearedByOperations = true;
+  report.clearedByOperationsAt = Date.now();
+  await report.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      report,
+    },
+  });
+});
+
+const getWeeklyReportByDate = catchAsync(async (req, res, next) => {
+  const { startDate, endDate } = req.body;
+
+  const report = await WeeklyReport.findOne({
+    createdAt: { $gte: startDate, $lte: endDate },
+  });
+  if (!report) {
+    return next(new AppError("No report found for this date", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      report,
+    },
+  });
+});
+
 export {
   scheduleWeeklyReport,
   createWeeklyReport,
   updateSecurityReportById,
+  setClearByIt,
   getWeeklyReport,
+  setClearByMonitoring,
+  setClearByOperations,
+  getWeeklyReportByDate,
 };

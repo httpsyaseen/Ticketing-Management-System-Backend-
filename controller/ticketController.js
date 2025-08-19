@@ -208,6 +208,7 @@ const setClosedStatus = catchAsync(async (req, res, next) => {
       path: "assignedTo",
       model: ["Department", "Market"],
     });
+
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
   }

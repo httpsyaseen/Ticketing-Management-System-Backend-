@@ -6,7 +6,7 @@ const securityReportSchema = new Schema({
     type: Date,
     required: true,
   },
-  updatedAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
   isSubmitted: { type: Boolean, default: false },
   totalCCTV: {
     type: Number,
@@ -35,7 +35,7 @@ const securityReportSchema = new Schema({
   biometricStatus: {
     type: Boolean,
   },
-  Comments: {
+  comments: {
     type: String,
   },
 });

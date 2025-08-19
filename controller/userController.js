@@ -35,7 +35,12 @@ const createuser = catchAsync(async (req, res, next) => {
 });
 
 const getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find().select("-password");
+  const users = await User.find()
+    .select("-password")
+    .populate({
+      path: "assignedTo",
+      model: ["Department", "Market"],
+    });
 
   res.status(200).json({
     status: "success",
