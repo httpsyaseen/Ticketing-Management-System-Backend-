@@ -213,11 +213,27 @@ const setClearByOperations = catchAsync(async (req, res, next) => {
 const getWeeklyReportByDate = catchAsync(async (req, res, next) => {
   const { startDate, endDate } = req.body;
 
-  const report = await WeeklyReport.findOne({
+  const report = await WeeklyReport.find({
     createdAt: { $gte: startDate, $lte: endDate },
   });
+
   if (!report) {
     return next(new AppError("No report found for this date", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      report,
+    },
+  });
+});
+
+const getWeeklyReportById = catchAsync(async (req, res, next) => {
+  const report = await Report.findById(req.params.reportId);
+
+  if (!report) {
+    return next(new AppError("No report found with that ID", 404));
   }
 
   res.status(200).json({
@@ -237,4 +253,5 @@ export {
   setClearByMonitoring,
   setClearByOperations,
   getWeeklyReportByDate,
+  getWeeklyReportById,
 };

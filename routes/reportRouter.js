@@ -1,32 +1,46 @@
 import express from "express";
-const router = express.Router();
-import { protectedRoute, restrictedTo } from "../middlewares/auth.js";
 import {
   getWeeklyReport,
   updateSecurityReportById,
   setClearByIt,
   setClearByMonitoring,
   setClearByOperations,
+  getWeeklyReportByDate,
+  getWeeklyReportById,
 } from "../controller/reportController.js";
+import { protectedRoute, restrictedTo } from "../middlewares/auth.js";
 
-router
-  .route("/get-weekly-report")
-  .get(protectedRoute, restrictedTo("superadmin", "admin"), getWeeklyReport);
+const router = express.Router();
 
-router
-  .route("/update-security-report/:reportId")
-  .patch(protectedRoute, updateSecurityReportById);
+// All routes require authentication
+router.use(protectedRoute);
 
-router.route("/clear-by-it/:reportId").patch(protectedRoute, setClearByIt);
-router
-  .route("/clear-by-monitoring/:reportId")
-  .patch(protectedRoute, setClearByMonitoring);
-router
-  .route("/clear-by-operations/:reportId")
-  .patch(protectedRoute, setClearByOperations);
+// Weekly report retrieval (admin/superadmin only)
+router.get(
+  "/get-weekly-report",
+  restrictedTo("superadmin", "admin"),
+  getWeeklyReport
+);
 
-router
-  .route("/get-report-by-date")
-  .get(protectedRoute, restrictedTo("superadmin", "admin"), getReportByDate);
+// Update a specific security report
+router.patch("/update-security-report/:reportId", updateSecurityReportById);
+
+// Mark weekly report as cleared by IT
+router.patch("/clear-by-it/:reportId", setClearByIt);
+
+// Mark weekly report as cleared by Monitoring
+router.patch("/clear-by-monitoring/:reportId", setClearByMonitoring);
+
+// Mark weekly report as cleared by Operations
+router.patch("/clear-by-operations/:reportId", setClearByOperations);
+
+// Get weekly reports by date range (admin/superadmin only)
+router.post(
+  "/get-report-by-date",
+  restrictedTo("superadmin", "admin"),
+  getWeeklyReportByDate
+);
+
+router.route("/:reportId").get(getWeeklyReportById);
 
 export default router;

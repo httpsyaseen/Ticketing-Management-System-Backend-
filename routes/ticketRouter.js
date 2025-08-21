@@ -16,32 +16,29 @@ import upload from "../config/multerConfig.js";
 
 const router = express.Router();
 
-router
-  .route("/create-ticket")
-  .post(protectedRoute, upload.array("images", 2), createTicket);
+// Apply authentication to all routes
+router.use(protectedRoute);
 
-router.route("/getusertickets").get(protectedRoute, getUsertickets);
+router.route("/create-ticket").post(upload.array("images", 2), createTicket);
 
-router.route("/get-ticket/:ticketId").get(protectedRoute, getTicketById);
+router.route("/getusertickets").get(getUsertickets);
 
-router.route("/:departmentId").get(protectedRoute, getTicketByDepartment);
-router
-  .route("/set-time/:ticketId")
-  .patch(protectedRoute, restrictedTo("admin"), setResolutionTime);
+router.route("/get-ticket/:ticketId").get(getTicketById);
 
-router
-  .route("/add-comment/:ticketId")
-  .patch(protectedRoute, restrictedTo("admin"), addComment);
+router.route("/:departmentId").get(getTicketByDepartment);
 
-router
-  .route("/set-resolved/:ticketId")
-  .patch(protectedRoute, restrictedTo("admin"), setResolvedStatus);
-router.route("/close-ticket/:ticketId").patch(protectedRoute, setClosedStatus);
+router.route("/get-tickets").post(getTicketsByDateAndType);
 
-router
-  .route("/refer-department/:ticketId")
-  .patch(protectedRoute, restrictedTo("admin"), referDepartment);
+router.route("/close-ticket/:ticketId").patch(setClosedStatus);
+//ONLY ADMIN, SUPER ADMIN ROUTES
+router.use(restrictedTo("admin", "superadmin"));
 
-router.route("/get-tickets").post(protectedRoute, getTicketsByDateAndType);
+router.route("/set-time/:ticketId").patch(setResolutionTime);
+
+router.route("/add-comment/:ticketId").patch(addComment);
+
+router.route("/set-resolved/:ticketId").patch(setResolvedStatus);
+
+router.route("/refer-department/:ticketId").patch(referDepartment);
 
 export default router;

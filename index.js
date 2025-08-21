@@ -24,7 +24,7 @@ app.use(
 );
 
 // starter();
-// createWeeklyReport();
+createWeeklyReport();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

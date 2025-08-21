@@ -108,6 +108,7 @@ const deleteUser = catchAsync(async (req, res, next) => {
 });
 
 const starter = catchAsync(async () => {
+  // Check for superadmin user
   const user = await User.findOne({ email: "superadmin@gmail.com" });
   let department = await Department.findOne({
     name: "Head Office Administration",
@@ -122,12 +123,35 @@ const starter = catchAsync(async () => {
     const newUser = await User.create({
       name: "Super Admin",
       email: "superadmin@gmail.com",
-      password: "superadmin123",
+      password: "yaseenpsba",
       role: "superadmin",
       assignedTo: department._id,
       assignedToType: "Department",
     });
   }
+
+  // Check for IT user
+  const itUser = await User.findOne({ email: "it@gmail.com" });
+  let itDepartment = await Department.findOne({
+    name: "IT Department",
+  });
+
+  if (!itDepartment) {
+    itDepartment = await Department.create({
+      name: "IT Department",
+    });
+  }
+  if (!itUser) {
+    const newITUser = await User.create({
+      name: "IT Admin",
+      email: "it@gmail.com",
+      password: "yaseenpsba",
+      role: "superadmin",
+      assignedTo: itDepartment._id,
+      assignedToType: "Department",
+    });
+  }
+
   return;
 });
 

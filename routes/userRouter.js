@@ -10,6 +10,7 @@ import { protectedRoute, restrictedTo } from "../middlewares/auth.js";
 import { login, verifyUser } from "../controller/authController.js";
 
 router.post("/login", login);
+router.get("/verify", verifyUser);
 
 router.post(
   "/createuser",
@@ -17,8 +18,6 @@ router.post(
   // restrictedTo("superadmin"),
   createuser
 );
-
-router.get("/verify", verifyUser);
 
 router.get(
   "/getallusers",

@@ -194,20 +194,7 @@ const setClosedStatus = catchAsync(async (req, res, next) => {
     return next(new AppError("Ticket ID and feedback are required", 400));
   }
 
-  const ticket = await Ticket.findById(ticketId)
-    .populate({
-      path: "createdBy",
-      select: "name assignedTo",
-      populate: {
-        path: "assignedTo",
-        model: ["Department", "Market"],
-      },
-    })
-    .populate("comments.commentedBy", "name")
-    .populate({
-      path: "assignedTo",
-      model: ["Department", "Market"],
-    });
+  const ticket = await Ticket.findById(ticketId);
 
   if (!ticket) {
     return next(new AppError("Ticket not found", 404));
@@ -231,6 +218,7 @@ const setClosedStatus = catchAsync(async (req, res, next) => {
   });
 
   await ticket.save();
+  await ticket.populate("comments.commentedBy", "name");
 
   res.status(200).json({
     status: "success",
