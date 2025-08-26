@@ -10,8 +10,9 @@ import reportRouter from "./routes/reportRouter.js";
 import cors from "cors";
 
 import { globalError } from "./controller/errorController.js";
-import { starter } from "./controller/userController.js";
+
 import { createWeeklyReport } from "./controller/reportController.js";
+import { seedMarketsAndUsers, starter } from "./controller/automation.js";
 
 const app = express();
 
@@ -23,7 +24,8 @@ app.use(
   })
 );
 
-// starter();
+starter();
+// seedMarketsAndUsers();
 createWeeklyReport();
 
 app.use(express.json());

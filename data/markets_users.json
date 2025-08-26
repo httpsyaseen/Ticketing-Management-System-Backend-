@@ -1,0 +1,615 @@
+{
+  "markets": [
+    {
+      "name": "Sahulat Bazaar Mian Plaza",
+      "users": [
+        {
+          "name": "Mian Plaza Bazaar",
+          "email": "mianplaza@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Raiwind",
+      "users": [
+        {
+          "name": "Raiwind Bazaar",
+          "email": "raiwind@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Sabzazaar",
+      "users": [
+        {
+          "name": "Sabzazaar Bazaar",
+          "email": "sabzazaar@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Township",
+      "users": [
+        {
+          "name": "Township Bazaar",
+          "email": "township@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Thokar",
+      "users": [
+        {
+          "name": "Thokar Bazaar",
+          "email": "thokar@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Chung",
+      "users": [
+        {
+          "name": "Chung Bazaar",
+          "email": "chung@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Sher Shah",
+      "users": [
+        {
+          "name": "Sher Shah Bazaar",
+          "email": "shershah@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Wahdat Colony",
+      "users": [
+        {
+          "name": "Wahdat Colony Bazaar",
+          "email": "wahdatcolony@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Sahiwal",
+      "users": [
+        {
+          "name": "Sahiwal Bazaar",
+          "email": "sahiwal@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Vehari",
+      "users": [
+        {
+          "name": "Vehari Bazaar",
+          "email": "vehari@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Toba Tek Singh",
+      "users": [
+        {
+          "name": "Toba Tek Singh Bazaar",
+          "email": "tobateksingh@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Bahawalpur",
+      "users": [
+        {
+          "name": "Bahawalpur Bazaar",
+          "email": "bahawalpur@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Jampur",
+      "users": [
+        {
+          "name": "Jampur Bazaar",
+          "email": "jampur@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar DG Khan",
+      "users": [
+        {
+          "name": "DG Khan Bazaar",
+          "email": "dgkhan@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Layyah",
+      "users": [
+        {
+          "name": "Layyah Bazaar",
+          "email": "layyah@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Lodhran",
+      "users": [
+        {
+          "name": "Lodhran Bazaar",
+          "email": "lodhran@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Kasur",
+      "users": [
+        {
+          "name": "Kasur Bazaar",
+          "email": "kasur@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Jhang",
+      "users": [
+        {
+          "name": "Jhang Bazaar",
+          "email": "jhang@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Taunsa Sharif",
+      "users": [
+        {
+          "name": "Taunsa Sharif Bazaar",
+          "email": "taunsasharif@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Bhakkar",
+      "users": [
+        {
+          "name": "Bhakkar Bazaar",
+          "email": "bhakkar@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Pakpattan",
+      "users": [
+        {
+          "name": "Pakpattan Bazaar",
+          "email": "pakpattan@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar China Scheme",
+      "users": [
+        {
+          "name": "China Scheme Bazaar",
+          "email": "chinascheme@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Harbanspura",
+      "users": [
+        {
+          "name": "Harbanspura Bazaar",
+          "email": "harbanspura@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Sargodha",
+      "users": [
+        {
+          "name": "Sargodha Bazaar",
+          "email": "sargodha@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Khushab",
+      "users": [
+        {
+          "name": "Khushab Bazaar",
+          "email": "khushab@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Bhera",
+      "users": [
+        {
+          "name": "Bhera Bazaar",
+          "email": "bhera@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Millat Road",
+      "users": [
+        {
+          "name": "Millat Road Bazaar",
+          "email": "fsd.millatroad@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Jhang Road",
+      "users": [
+        {
+          "name": "Jhang Road Bazaar",
+          "email": "fsd.jhangroad@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Mianwali",
+      "users": [
+        {
+          "name": "Mianwali Bazaar",
+          "email": "mianwali@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Gujranwala",
+      "users": [
+        {
+          "name": "Gujranwala Bazaar",
+          "email": "gujranwala@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Sialkot",
+      "users": [
+        {
+          "name": "Sialkot Bazaar",
+          "email": "sialkot@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Hafizabad",
+      "users": [
+        {
+          "name": "Hafizabad Bazaar",
+          "email": "hafizabad@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Rawalpindi",
+      "users": [
+        {
+          "name": "Rawalpindi Bazaar",
+          "email": "rawalpindi@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Chakwal",
+      "users": [
+        {
+          "name": "Chakwal Bazaar",
+          "email": "chakwal@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Farooqabad",
+      "users": [
+        {
+          "name": "Farooqabad Bazaar",
+          "email": "farooqabad@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Gujrat",
+      "users": [
+        {
+          "name": "Gujrat Bazaar",
+          "email": "gujrat@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Mandi Bahaudin",
+      "users": [
+        {
+          "name": "Mandi Bahaudin Bazaar",
+          "email": "mandibahauddin@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Muzaffargarh",
+      "users": [
+        {
+          "name": "Muzaffargarh Bazaar",
+          "email": "muzaffargarh@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Pattoki",
+      "users": [
+        {
+          "name": "Pattoki Bazaar",
+          "email": "pattoki@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Chunian",
+      "users": [
+        {
+          "name": "Chunian Bazaar",
+          "email": "chunian@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Bhalwal",
+      "users": [
+        {
+          "name": "Bhalwal Bazaar",
+          "email": "bhalwal@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Khanewal",
+      "users": [
+        {
+          "name": "Khanewal Bazaar",
+          "email": "khanewal@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Narowal",
+      "users": [
+        {
+          "name": "Narowal Bazaar",
+          "email": "narowal@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Chinniot",
+      "users": [
+        {
+          "name": "Chinniot Bazaar",
+          "email": "chiniot@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Wazirabad",
+      "users": [
+        {
+          "name": "Wazirabad Bazaar",
+          "email": "wazirabad@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Sharaqpur Sharif",
+      "users": [
+        {
+          "name": "Sharaqpur Sharif Bazaar",
+          "email": "sharaqpur@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    },
+    {
+      "name": "Sahulat Bazaar Jaranwala",
+      "users": [
+        {
+          "name": "Jaranwala Bazaar",
+          "email": "jaranwala@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "user",
+          "assignedToType": "Market",
+          "assignedTo": "<marketId>"
+        }
+      ]
+    }
+  ]
+}

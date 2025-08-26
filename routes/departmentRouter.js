@@ -8,14 +8,8 @@ import {
 
 router
   .route("/create-department")
-  // .post(createDepartment);
+
   .post(protectedRoute, restrictedTo("superadmin", "admin"), createDepartment);
-router
-  .route("/get-all-departments")
-  .get(
-    protectedRoute,
-    restrictedTo("superadmin", "admin", "user"),
-    getAllDepartments
-  );
+router.route("/get-all-departments").get(getAllDepartments);
 
 export default router;

@@ -12,12 +12,7 @@ import { login, verifyUser } from "../controller/authController.js";
 router.post("/login", login);
 router.get("/verify", verifyUser);
 
-router.post(
-  "/createuser",
-  // protectedRoute,
-  // restrictedTo("superadmin"),
-  createuser
-);
+router.post("/createuser", createuser);
 
 router.get(
   "/getallusers",
@@ -34,7 +29,7 @@ router.patch(
 );
 
 router.patch(
-  "/deleteuser/:id",
+  "/deleteuser/:userId",
   protectedRoute,
   restrictedTo("superadmin"),
   deleteUser

@@ -7,6 +7,6 @@ router
   .route("/create-market")
   .post(protectedRoute, restrictedTo("superadmin", "admin"), createMarket);
 // .post(createMarket);
-router.route("/get-all-markets").get(protectedRoute, getAllMarkets);
+router.route("/get-all-markets").get(getAllMarkets);
 
 export default router;

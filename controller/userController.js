@@ -18,10 +18,15 @@ const createuser = catchAsync(async (req, res, next) => {
     name,
     email,
     password,
-    role,
     assignedTo,
     assignedToType,
   };
+
+  if (assignedToType === "Department") {
+    userData.role = "admin";
+  } else if (assignedToType === "Market") {
+    userData.role = "user";
+  }
 
   // Create new user
   const newUser = await User.create(userData);
@@ -53,39 +58,22 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res, next) => {
   const { userId } = req.params;
-  const { name, email, role, departmentId, marketId, password } = req.body;
+  const { name, password } = req.body;
 
   const user = await User.findById(userId);
   if (!user) return next(new AppError("User not found", 404));
 
-  // Apply updates manually
   if (name !== undefined) user.name = name;
-  if (email !== undefined) user.email = email;
-  if (role !== undefined) user.role = role;
   if (password !== undefined) user.password = password;
 
-  if (departmentId && marketId) {
-    return res.status(400).json({
-      error: "Provide either departmentId or marketId — not both.",
-    });
-  }
+  await user.save();
 
-  if (departmentId !== undefined) {
-    user.departmentId = departmentId;
-    user.marketId = undefined;
-  }
-  if (marketId !== undefined) {
-    user.marketId = marketId;
-    user.departmentId = undefined;
-  }
-
-  await user.save(); // <-- pre-save hooks now run
+  const userObj = user.toObject();
+  delete userObj.password;
 
   res.status(200).json({
     status: "success",
-    data: {
-      user,
-    },
+    data: { user: userObj },
   });
 });
 
@@ -107,52 +95,4 @@ const deleteUser = catchAsync(async (req, res, next) => {
   });
 });
 
-const starter = catchAsync(async () => {
-  // Check for superadmin user
-  const user = await User.findOne({ email: "superadmin@gmail.com" });
-  let department = await Department.findOne({
-    name: "Head Office Administration",
-  });
-
-  if (!department) {
-    department = await Department.create({
-      name: "Head Office Administration",
-    });
-  }
-  if (!user) {
-    const newUser = await User.create({
-      name: "Super Admin",
-      email: "superadmin@gmail.com",
-      password: "yaseenpsba",
-      role: "superadmin",
-      assignedTo: department._id,
-      assignedToType: "Department",
-    });
-  }
-
-  // Check for IT user
-  const itUser = await User.findOne({ email: "it@gmail.com" });
-  let itDepartment = await Department.findOne({
-    name: "IT Department",
-  });
-
-  if (!itDepartment) {
-    itDepartment = await Department.create({
-      name: "IT Department",
-    });
-  }
-  if (!itUser) {
-    const newITUser = await User.create({
-      name: "IT Admin",
-      email: "it@gmail.com",
-      password: "yaseenpsba",
-      role: "superadmin",
-      assignedTo: itDepartment._id,
-      assignedToType: "Department",
-    });
-  }
-
-  return;
-});
-
-export { createuser, getAllUsers, deleteUser, updateUser, starter };
+export { createuser, getAllUsers, deleteUser, updateUser };

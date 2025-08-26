@@ -4,6 +4,7 @@ const marketSchema = new Schema({
   name: {
     type: String,
     required: [true, "Please provide a market name"],
+    unique: true,
   },
   currentReport: {
     type: Schema.Types.ObjectId,
