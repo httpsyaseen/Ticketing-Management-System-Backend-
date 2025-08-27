@@ -87,6 +87,7 @@ const deleteUser = catchAsync(async (req, res, next) => {
   }
 
   deletedUser.active = false; // Soft delete
+  deletedUser.email = `${deletedUser.email.split("@")[0]}@deleted.com`;
   await deletedUser.save();
 
   res.status(204).json({
