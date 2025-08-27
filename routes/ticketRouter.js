@@ -30,14 +30,15 @@ router.route("/:departmentId").get(getTicketByDepartment);
 router.route("/get-tickets").post(getTicketsByDateAndType);
 
 router.route("/close-ticket/:ticketId").patch(setClosedStatus);
+
 router.route("/set-time/:ticketId").patch(setResolutionTime);
-//ONLY ADMIN, SUPER ADMIN ROUTES
+
+router.route("/set-resolved/:ticketId").patch(setResolvedStatus);
 
 router.route("/add-comment/:ticketId").patch(addComment);
 
-router.route("/set-resolved/:ticketId").patch(setResolvedStatus);
+//ONLY ADMIN, SUPER ADMIN ROUTES
 router.use(restrictedTo("admin", "superadmin"));
-
 router.route("/refer-department/:ticketId").patch(referDepartment);
 
 export default router;

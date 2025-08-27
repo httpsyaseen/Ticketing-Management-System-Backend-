@@ -85,7 +85,6 @@ const setResolutionTime = catchAsync(async (req, res, next) => {
     return next(new AppError("Ticket not found", 404));
   }
 
-  console.log(ticket, req.user);
   if (!ticket.assignedTo.equals(req.user.assignedTo._id)) {
     return next(
       new AppError("You are not authorized to entertain this ticket", 403)

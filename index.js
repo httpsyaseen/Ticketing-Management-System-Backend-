@@ -25,8 +25,9 @@ app.use(
 );
 
 starter();
+//first run the seedMarketsAndUsers and then use createWeeklyReport Only
 // seedMarketsAndUsers();
-createWeeklyReport();
+// createWeeklyReport();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

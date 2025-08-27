@@ -230,7 +230,7 @@ const getWeeklyReportByDate = catchAsync(async (req, res, next) => {
 });
 
 const getWeeklyReportById = catchAsync(async (req, res, next) => {
-  const report = await Report.findById(req.params.reportId);
+  const report = await WeeklyReport.findById(req.params.reportId);
 
   if (!report) {
     return next(new AppError("No report found with that ID", 404));
