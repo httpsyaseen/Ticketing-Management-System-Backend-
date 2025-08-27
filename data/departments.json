@@ -1,0 +1,136 @@
+{
+  "departments": [
+    {
+      "name": "IT Department",
+      "users": [
+        {
+          "name": "IT Department Admin",
+          "email": "itdepartment@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "Operations Department",
+      "users": [
+        {
+          "name": "Operations Department Admin",
+          "email": "operations@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "Accounts Department",
+      "users": [
+        {
+          "name": "Accounts Department Admin",
+          "email": "accounts@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "Audit Department",
+      "users": [
+        {
+          "name": "Audit Department Admin",
+          "email": "audit@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "FHD Department",
+      "users": [
+        {
+          "name": "FHD Department Admin",
+          "email": "fhd@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "Monitoring Department",
+      "users": [
+        {
+          "name": "Monitoring Department Admin",
+          "email": "monitoring@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "Engineering Department",
+      "users": [
+        {
+          "name": "Engineering Department Admin",
+          "email": "engineering@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "HR Department",
+      "users": [
+        {
+          "name": "HR Department Admin",
+          "email": "hr@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "PMU Department",
+      "users": [
+        {
+          "name": "PMU Department Admin",
+          "email": "pmu@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "Special Initiative Department",
+      "users": [
+        {
+          "name": "Special Initiative Department Admin",
+          "email": "specialinitiative@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    },
+    {
+      "name": "Software Department",
+      "users": [
+        {
+          "name": "Software Department Admin",
+          "email": "software@psba.gop.pk",
+          "password": "yaseenpsba",
+          "role": "admin",
+          "assignedToType": "Department"
+        }
+      ]
+    }
+  ]
+}

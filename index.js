@@ -12,7 +12,11 @@ import cors from "cors";
 import { globalError } from "./controller/errorController.js";
 
 import { createWeeklyReport } from "./controller/reportController.js";
-import { seedMarketsAndUsers, starter } from "./controller/automation.js";
+import {
+  seedMarketsAndUsers,
+  starter,
+  seedDepartmentsAndUsers,
+} from "./controller/automation.js";
 
 const app = express();
 
@@ -24,10 +28,11 @@ app.use(
   })
 );
 
-starter();
+// starter();
 //first run the seedMarketsAndUsers and then use createWeeklyReport Only
-// seedMarketsAndUsers();
+seedMarketsAndUsers();
 // createWeeklyReport();
+seedDepartmentsAndUsers();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
